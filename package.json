@@ -1,6 +1,6 @@
 {
     "name": "@pistonite/webfs",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "type": "module",
     "private": true,
     "description": "Filesystem like API for the web (not production-ready)",
@@ -26,6 +26,8 @@
     },
     "imports": {
         "#api": "./src/api/index.ts",
+        "#imp/file_standalone": "./src/imp/file_standalone/index.ts",
+        "#interface": "./src/interface/index.ts",
         "#util": "./src/util/index.ts"
     },
     "repository": {

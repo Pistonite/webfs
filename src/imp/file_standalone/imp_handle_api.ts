@@ -1,8 +1,7 @@
-import { ilog } from "../log/internal.ts";
-import { errstr } from "../result";
+import { errstr } from "@pistonite/pure/result";
 
-import { fsErr, FsErr, fsFail, type FsVoid, type FsResult } from "./FsError.ts";
-import type { FsFileStandalone } from "./FsFileStandalone.ts";
+import type { FsFileStandalone } from "#interface";
+import { log, fsErr, FsErr, fsFail, type FsVoid, type FsResult } from "#util";
 
 export class FsFileStandaloneImplHandleAPI implements FsFileStandalone {
     name: string;
@@ -40,7 +39,7 @@ export class FsFileStandaloneImplHandleAPI implements FsFileStandalone {
             });
             return requestedPermission === "granted";
         } catch (e) {
-            ilog.error(e);
+            log.error(e);
             return false;
         }
     }
@@ -59,7 +58,7 @@ export class FsFileStandaloneImplHandleAPI implements FsFileStandalone {
                     return { err: fsErr(FsErr.NotFound, "File not found") };
                 }
             }
-            ilog.error(e);
+            log.error(e);
             return { err: fsFail(errstr(e)) };
         }
     }
@@ -80,7 +79,7 @@ export class FsFileStandaloneImplHandleAPI implements FsFileStandalone {
             const data = await file.val.arrayBuffer();
             return { val: new Uint8Array(data) };
         } catch (e) {
-            ilog.error(e);
+            log.error(e);
             return { err: fsFail(errstr(e)) };
         }
     }
@@ -100,7 +99,7 @@ export class FsFileStandaloneImplHandleAPI implements FsFileStandalone {
             const data = await file.val.text();
             return { val: data };
         } catch (e) {
-            ilog.error(e);
+            log.error(e);
             return { err: fsFail(errstr(e)) };
         }
     }
@@ -140,7 +139,7 @@ export class FsFileStandaloneImplHandleAPI implements FsFileStandalone {
                     };
                 }
             }
-            ilog.error(e);
+            log.error(e);
             return { err: fsFail(errstr(e)) };
         }
     }

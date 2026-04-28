@@ -1,4 +1,4 @@
-import type { FsResult, FsVoid } from "./FsError.ts";
+import type { FsResult, FsVoid } from "#util";
 
 /**
  * Interface for operating on a file opened standalone (without opening a file system

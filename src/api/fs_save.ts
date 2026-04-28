@@ -1,4 +1,4 @@
-import { fsFail, type FsVoid } from "#util";
+import { log, fsFail, type FsVoid } from "#util";
 
 /** Save (download) a file using Blob */
 export function fsSave(content: string | Uint8Array<ArrayBuffer>, filename: string): FsVoid {
@@ -11,7 +11,7 @@ export function fsSave(content: string | Uint8Array<ArrayBuffer>, filename: stri
         saveAs(blob, filename);
         return {};
     } catch (e) {
-        console.error(e);
+        log.error(e);
         return { err: fsFail("save failed") };
     }
 }
@@ -70,7 +70,7 @@ const download = (url: string | URL, name?: string, opts?: SaveAsFnOptions) => {
         saveAs(xhr.response, name, opts);
     };
     xhr.onerror = function () {
-        console.error("could not download file");
+        log.error("could not download file");
     };
     xhr.send();
 };

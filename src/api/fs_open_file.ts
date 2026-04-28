@@ -1,9 +1,58 @@
 import { errstr } from "@pistonite/pure/result";
 
-import { fsErr, FsErr, fsFail, type FsResult } from "./FsError.ts";
-import type { FsFileStandalone } from "./FsFileStandalone.ts";
-import { FsFileStandaloneImplFileAPI } from "./FsFileStandaloneImplFileAPI.ts";
-import { FsFileStandaloneImplHandleAPI } from "./FsFileStandaloneImplHandleAPI.ts";
+import { FsFileStandaloneImplFileAPI, FsFileStandaloneImplHandleAPI } from "#imp/file_standalone";
+import type { FsFileStandalone } from "#interface";
+import { fsErr, FsErr, fsFail, log, type FsResult } from "#util";
+
+export interface FsFileOpenOptions {
+    /**
+     * ID for the file open operation
+     *
+     * Supported implementation can use this to open the picker in the same
+     * directory for the same ID
+     */
+    id?: string;
+
+    /**
+     * If the "*.*" file type should be hidden in the picker.
+     *
+     * In unsupported implementations, this will be ignored, and the "*.*"
+     * file type will always be visible.
+     *
+     * By default, this is false
+     */
+    disallowWildcard?: boolean;
+
+    /** List of file types to accept */
+    types?: FsFileOpenType[];
+}
+
+/** File type to accept */
+export interface FsFileOpenType {
+    /**
+     * Optional description for the type, which may display in the file picker
+     *
+     * In unsupported implementations, this will be ignored.
+     */
+    description?: string;
+
+    /**
+     * List of file mime types or extensions to accept for this file type
+     *
+     * String elements are file extensions, with the "." prefix. More context
+     * can be provided with an object element with mime type and extensions to
+     * have better file type descriptions in the picker (if supported).
+     */
+    accept: (FsFileOpenTypeAccept | string)[];
+}
+
+/** File mime type or extension to accept */
+export interface FsFileOpenTypeAccept {
+    /** Optional mime type, which the browser can be used to display file type descriptions */
+    mime?: string;
+    /** extensions to accept (with the "." prefix) */
+    extensions: string[];
+}
 
 /**
  * Prompt user to open a file
@@ -120,6 +169,7 @@ const fsOpenFileWithFileAPI = async (
             element.click();
         });
     } catch (e) {
+        log.error(e);
         return { err: fsFail(errstr(e)) };
     }
 };
@@ -180,56 +230,9 @@ const fsOpenFileWithFileSystemAccessAPI = async (
                 return { err: fsErr(FsErr.PermissionDenied, "Security error") };
             }
         }
+        log.error(e);
         return { err: fsFail(errstr(e)) };
     }
-};
-
-export type FsFileOpenOptions = {
-    /**
-     * ID for the file open operation
-     *
-     * Supported implementation can use this to open the picker in the same
-     * directory for the same ID
-     */
-    id?: string;
-
-    /**
-     * If the "*.*" file type should be hidden in the picker.
-     *
-     * In unsupported implementations, this will be ignored, and the "*.*"
-     * file type will always be visible.
-     *
-     * By default, this is false
-     */
-    disallowWildcard?: boolean;
-
-    /** List of file types to accept */
-    types?: FsFileOpenType[];
-};
-
-export type FsFileOpenType = {
-    /**
-     * Optional description for the type, which may display in the file picker
-     *
-     * In unsupported implementations, this will be ignored.
-     */
-    description?: string;
-
-    /**
-     * List of file mime types or extensions to accept for this file type
-     *
-     * String elements are file extensions, with the "." prefix. More context
-     * can be provided with an object element with mime type and extensions to
-     * have better file type descriptions in the picker (if supported).
-     */
-    accept: (FsFileOpenTypeAccept | string)[];
-};
-
-export type FsFileOpenTypeAccept = {
-    /** Optional mime type, which the browser can be used to display file type descriptions */
-    mime?: string;
-    /** extensions to accept (with the "." prefix) */
-    extensions: string[];
 };
 
 const isFileSystemAccessAPISupportedForStandaloneFileOpen = () => {

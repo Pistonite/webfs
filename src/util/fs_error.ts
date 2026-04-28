@@ -40,14 +40,14 @@ export interface FsError {
 }
 
 /** Helper to create a FsError */
-export function fsErr(code: FsErr, message: string): FsError {
+export const fsErr = (code: FsErr, message: string): FsError => {
     return { code, message };
-}
+};
 
 /** Helper to create a FsError with the code Fail */
-export function fsFail(message: string): FsError {
+export const fsFail = (message: string): FsError => {
     return fsErr(FsErr.Fail, message);
-}
+};
 
 /** Helper result type for FsError */
 export type FsResult<T> = Result<T, FsError>;
