@@ -1,0 +1,45 @@
+{
+    "name": "@pistonite/webfs",
+    "version": "0.1.0",
+    "type": "module",
+    "private": true,
+    "description": "Filesystem like API for the web (not production-ready)",
+    "homepage": "https://github.com/Pistonite/webfs",
+    "bugs": {
+        "url": "https://github.com/Pistonite/webfs/issues"
+    },
+    "license": "MIT",
+    "author": "Pistonight <pistonknight@outlook.com>",
+    "files": [
+        "dist/**/*",
+        "src/**/*"
+    ],
+    "pistonight/mono-dev": {
+        "lib": true,
+        "publish": true
+    },
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "types": "./dist/_dts_/src/index.d.ts"
+        }
+    },
+    "imports": {
+        "#api": "./src/api/index.ts",
+        "#util": "./src/util/index.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Pistonite/webfs.git"
+    },
+    "devDependencies": {
+        "eslint": "^9",
+        "mono-dev": "github:Pistonight/mono-dev#dist"
+    },
+    "dependencies": {
+        "@pistonite/pure": "^0.29.5"
+    },
+    "nocheck": [
+        "/OLD"
+    ]
+}

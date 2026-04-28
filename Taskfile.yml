@@ -1,0 +1,32 @@
+version: '3'
+
+includes:
+  ecma:
+    taskfile: ./node_modules/mono-dev/task/ecma.yaml
+    internal: true
+    optional: true
+
+tasks:
+  install:
+    - pnpm install
+    - task: ecma:config
+
+  check:
+    - task: ecma:check
+  fix:
+    - task: ecma:fix
+  build:
+    - task: ecma:lib-build
+
+  upgrade:
+    - pnpm up @pistonite/pure mono-dev
+    - pnpm dedupe
+    - pnpm dedupe --check
+    - task: install
+
+  publish:
+    - rm -rf dist
+    - task: install
+    - task: check
+    - task: build
+    - task: ecma:publish
