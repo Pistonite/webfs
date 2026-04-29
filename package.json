@@ -1,6 +1,6 @@
 {
     "name": "@pistonite/webfs",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "type": "module",
     "private": true,
     "description": "Filesystem like API for the web (not production-ready)",
@@ -39,7 +39,7 @@
         "mono-dev": "github:Pistonight/mono-dev#dist"
     },
     "dependencies": {
-        "@pistonite/pure": "^0.29.5"
+        "@pistonite/pure": "^0.29.6"
     },
     "nocheck": [
         "/OLD"
