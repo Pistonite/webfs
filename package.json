@@ -1,6 +1,6 @@
 {
     "name": "@pistonite/webfs",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "type": "module",
     "private": true,
     "description": "Filesystem like API for the web (not production-ready)",
@@ -10,19 +10,22 @@
     },
     "license": "MIT",
     "author": "Pistonight <pistonknight@outlook.com>",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Pistonite/webfs.git"
+    },
     "files": [
-        "dist/**/*",
         "src/**/*"
     ],
-    "pistonight/mono-dev": {
-        "lib": true,
-        "publish": true
+    "devDependencies": {
+        "eslint": "^9",
+        "mono-dev": "github:Pistonight/mono-dev#dist"
+    },
+    "dependencies": {
+        "@pistonite/pure": "^0.29.7"
     },
     "exports": {
-        ".": {
-            "import": "./dist/index.js",
-            "types": "./dist/_dts_/src/index.d.ts"
-        }
+        ".": "./src/index.ts"
     },
     "imports": {
         "#api": "./src/api/index.ts",
@@ -30,18 +33,11 @@
         "#interface": "./src/interface/index.ts",
         "#util": "./src/util/index.ts"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Pistonite/webfs.git"
-    },
-    "devDependencies": {
-        "eslint": "^9",
-        "mono-dev": "github:Pistonight/mono-dev#dist"
-    },
-    "dependencies": {
-        "@pistonite/pure": "^0.29.6"
-    },
-    "nocheck": [
-        "/OLD"
-    ]
+    "pistonight/mono-dev": {
+        "lib": true,
+        "publish": true,
+        "nocheck": [
+            "/OLD"
+        ]
+    }
 }
