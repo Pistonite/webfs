@@ -26,7 +26,5 @@ tasks:
 
   publish:
     - rm -rf dist
-    - task: install
     - task: check
-    - task: build
     - task: ecma:publish
